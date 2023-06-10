@@ -14,7 +14,7 @@ use App\Models\Event;
 
 class FrontController extends Controller
 {
-
+    // Afficher tous les événements
     public function index(SearchFromRequest $request)
     {
         $from=$request->input('from');
@@ -34,7 +34,7 @@ class FrontController extends Controller
         ]);
     }
 
-
+    // Enregister un événement
     public function store(EventFromRequest $request)
     {
         $event=new Event();
@@ -46,7 +46,7 @@ class FrontController extends Controller
         return  redirect()->back();
     }
 
-
+    // Modifier un événement
     public function update(EventFromRequest $request)
     {
         $event=Event::find($request->input('id'));
@@ -58,6 +58,7 @@ class FrontController extends Controller
         return redirect()->back();
     }
 
+    // Masquer un événement
     public function destroy(EventIdFormRequest $request)
     {
         $event=Event::find($request->input('id'));

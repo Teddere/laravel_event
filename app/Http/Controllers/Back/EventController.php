@@ -12,6 +12,7 @@ use Inertia\Inertia;
 
 class EventController extends Controller
 {
+    // Afficher tous les événements
     public function index(SearchFromRequest $request){
         $search=array();
         $search['status']=$request->input('status');
@@ -22,7 +23,7 @@ class EventController extends Controller
             'events'=>Event::filter($search)->latest()->paginate(8),
         ]);
     }
-
+    // Enregister un événement
     public function store(EventFromRequest $request){
         $event=new Event();
         $event->title=$request->input('title');
@@ -33,7 +34,7 @@ class EventController extends Controller
 
         return redirect()->back();
     }
-
+    // Modifier un événement
     public function update(EventFromRequest $request){
         $event=Event::query()->find($request->input('id'));
         $event->title=$request->input('title');
@@ -43,6 +44,7 @@ class EventController extends Controller
         $event->save();
         return redirect()->back();
     }
+    // Supprimer un événement
     public function destroy(Request $request)
     {
         $event=Event::query()->find($request->input('id'));
@@ -50,27 +52,10 @@ class EventController extends Controller
 
         return redirect()->back();
     }
-
-    public function hideEvent(Request $request){
+    // Masqué un événement
+    public function mask(Request $request){
         $event=Event::query()->find($request->input('id'));
         $event->delete();
-        return redirect()->back();
-    }
-
-    public function mask(){
-        $events=Event::query()->onlyTrashed()->latest()->paginate(5);
-        return Inertia::render('Event/Mask',[
-            'events'=>$events
-        ]);
-    }
-    public function restore(EventIdFormRequest $request){
-        $event=Event::query()->withTrashed()->find($request->input('id'));
-        $event->restore();
-        return redirect()->back();
-    }
-    public function deleteEvent(EventIdFormRequest $request){
-        $event=Event::query()->withTrashed()->find($request->input('id'));
-        $event->forceDelete();
         return redirect()->back();
     }
     public function homePage(){

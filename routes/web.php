@@ -29,10 +29,11 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
             Route::post('/events',[\App\Http\Controllers\Back\EventController::class,'store'])->name('store');
             Route::put('/events',[\App\Http\Controllers\Back\EventController::class,'update'])->name('update');
             Route::delete('/events',[\App\Http\Controllers\Back\EventController::class,'destroy'])->name('delete');
-            Route::delete('/event/hide',[\App\Http\Controllers\Back\EventController::class,'hideEvent'])->name('hide');
-            Route::get('/events/mask',[\App\Http\Controllers\Back\EventController::class,'mask'])->name('mask');
-            Route::put('/events/restore',[\App\Http\Controllers\Back\EventController::class,'restore'])->name('restore');
-            Route::delete('/events/mask',[\App\Http\Controllers\Back\EventController::class,'deleteEvent'])->name('remove');
+            Route::delete('/event/hide',[\App\Http\Controllers\Back\EventController::class,'mask'])->name('hide');
+            // Les événements Masqués
+            Route::get('/events/mask',[\App\Http\Controllers\back\EventMaskController::class,'index'])->name('mask');
+            Route::put('/events/restore',[\App\Http\Controllers\Back\EventMaskController::class,'restore'])->name('restore');
+            Route::delete('/events/mask',[\App\Http\Controllers\Back\EventMaskController::class,'destroy'])->name('remove');
         });
 });
 
